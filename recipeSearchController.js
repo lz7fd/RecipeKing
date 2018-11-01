@@ -25,7 +25,7 @@ app.controller("recipeSearchCtrl", function($scope, $http){
         $http.post("test.php").then
         $http({
             method: 'POST',
-            url: 'test.php',
+            url: 'recipe_king.php',
             data: $scope.ingredients,
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).then(function mySuccess(response) {
