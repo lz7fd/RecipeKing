@@ -27,11 +27,11 @@ app.controller("recipeSearchCtrl", function ($scope) {
 //            params : {'q':$scope.ingredients}
             data: ingredients
         }).then(function successCallback(response) {
-            $scope.recipes = response.data;
+            obj = JSON.parse(response.data);
         }, function errorCallback(response) {
             $scope.error = response.statusText;
         });
-        obj = JSON.parse(response.data);
+//        obj = JSON.parse(recipes);
         $scope.recipes = {
             "recipe1": {"label": obj.hits[1].label, "yield": obj.hits[1].yield, "calories": obj.hits[1].calories},
             "recipe2": {"label": obj.hits[2].label, "yield": obj.hits[2].yield, "calories": obj.hits[2].calories},
