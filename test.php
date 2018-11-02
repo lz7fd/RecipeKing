@@ -1,3 +1,3 @@
-<?php
-    echo "php working";
+<?php
+    echo "php working";
 ?>
