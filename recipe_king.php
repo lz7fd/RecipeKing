@@ -8,8 +8,9 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 $ingredients = $request->ingredients;
 $query = implode(",",$ingredients);  // converts the array into a string
+$limit = 100;
 
-$get_data = callAPI('GET', "https://api.edamam.com/search?q=".$query."&".$API_id."&".$API_key, false);
+$get_data = callAPI('GET', "https://api.edamam.com/search?q=".$query."&to=".$limit."&".$API_id."&".$API_key, false);
 echo $get_data;
 $response = json_decode($get_data, true);
 //echo $response[0]->hits
