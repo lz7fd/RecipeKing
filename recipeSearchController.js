@@ -20,7 +20,8 @@ app.config(function($routeProvider) {
 app.controller("recipeSearchCtrl", function($scope, $http, $location, recipePassService, recipeKeepService, ingredientKeepService){
 
     $scope.ingredients = ingredientKeepService.get();
-
+    $scope.dietLabel = [];
+    $scope.health = [];
     $scope.recipes = recipeKeepService.get();
 
     $scope.message = "";
@@ -34,26 +35,36 @@ app.controller("recipeSearchCtrl", function($scope, $http, $location, recipePass
 
     // Reference: https://www.w3schools.com/angular/default.asp , https://www.w3schools.com/angular/angular_application.asp
     $scope.addIngredient = function() {
-
         if(!$scope.addIn){
-
             return;
-
         }
-
         if ($scope.ingredients.indexOf($scope.addIn) == -1){
-
             $scope.ingredients.push($scope.addIn);
-
             $scope.addIn = "";
-
         }else {
-
             $scope.errorMsg = "Ingredient already added.";
-
         }
-
     }
+    $scope.addDiet = function() {
+        if(!$scope.addIn){
+            return;
+        }
+        if ($scope.dietLabel.indexOf($scope.addIn) == -1){
+            $scope.dietLabel.push($scope.addIn);
+            $scope.addIn = "";
+        }
+    }
+
+    $scope.addHealth = function() {
+        if(!$scope.addIn){
+            return;
+        }
+        if ($scope.health.indexOf($scope.addIn) == -1){
+            $scope.health.push($scope.addIn);
+            $scope.addIn = "";
+        }
+    }
+
     $scope.selectedOrder = function(x){
         $scope.sortOrder = x;
     }
@@ -77,9 +88,9 @@ app.controller("recipeSearchCtrl", function($scope, $http, $location, recipePass
             url: 'recipe_king.php',
 
             data: {
-
-                'ingredients': $scope.ingredients
-
+                'ingredients': $scope.ingredients,  // POST the user-specified ingredients to the php file
+                'dietLabel': $scope.dietLabel,
+                'health': $scope.health
             },
 
             headers: { 'Content-Type': 'application/json' }
