@@ -1,14 +1,35 @@
-var app = angular.module("recipeSearch", []);
+//Angular Control for Recipe King app
 
-app.controller("recipeSearchCtrl", function($scope, $http){
+var app = angular.module("recipeSearch", ["ngRoute"]);
+app.config(function($routeProvider) {
+    $routeProvider
+    .when("/", {
+        templateUrl : "views/home.html",
+        controller  : "recipeSearchCtrl"
+    })
+    .when("/about", {
+        templateUrl : "views/about.html",
+    })
+    .when("/recipe", {
+        templateUrl : "views/recipe.html",
+        controller  : "recipePageController"
+    });
+});
 
-    $scope.ingredients = [];
 
-    $scope.recipes = [];
+app.controller("recipeSearchCtrl", function($scope, $http, $location, recipePassService, recipeKeepService, ingredientKeepService){
+
+    $scope.ingredients = ingredientKeepService.get();
+
+    $scope.recipes = recipeKeepService.get();
 
     $scope.message = "";
 
-    $scope.showRecipeTable =false;
+    if($scope.recipes === undefined || $scope.recipes.length == 0){
+        $scope.showRecipeTable = false;
+    }else {
+        $scope.showRecipeTable =true;
+    }
     $scope.showLoader = false;
 
     // Reference: https://www.w3schools.com/angular/default.asp , https://www.w3schools.com/angular/angular_application.asp
@@ -80,10 +101,57 @@ app.controller("recipeSearchCtrl", function($scope, $http){
             $scope.message = response.statusText;
 
         });
-
+    }
+    $scope.goToRecipe = function(x) {
+        recipePassService.set(x);
+        $location.path('/recipe');
     }
 
 
 
 });
-
+//service to pass recipe data between pages
+app.factory('recipePassService', function() {
+    var passedRecipe = {};
+    function set(recipe) {
+        passedRecipe = recipe;
+    }
+    function get() {
+        return passedRecipe;
+    }
+    return {
+        set : set,
+        get : get
+    }
+});
+//service to keep recipe table between pages
+app.factory('recipeKeepService', function() {
+    var keptRecipes = [];
+    function set(recipes) {
+        keptRecipes = recipes;
+    }
+    function get() {
+        return keptRecipes;
+    }
+    return {
+        set : set,
+        get : get
+    }
+});
+//service to keep ingredient list between pages
+app.factory('ingredientKeepService', function() {
+    var keptIngredients = [];
+    function set(ingredients) {
+        keptIngredients = ingredients;
+    }
+    function get() {
+        return keptIngredients;
+    }
+    return {
+        set : set,
+        get : get
+    }
+});
+app.controller('recipePageController', function($scope, recipePassService) {
+    $scope.recipe = recipePassService.get();
+});

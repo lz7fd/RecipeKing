@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" ng-app="recipeSearch">
 
     <head>
 
@@ -8,9 +8,10 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!--angular CDN-->
+        <!--angular CDN + Routing-->
 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 
         <!--Boostrap4 CSS-->
 
@@ -23,188 +24,51 @@
         <link rel="stylesheet" type="text/css" href="style.css">
 
         <title>Recipe King</title>
-
-    </head>
-
-    <body>
-
-        <!--Navbar-->
-
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-
-            <span class="container">
-
-            <a class="navbar-brand" href="index.html">Recipe King</a>
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNav">
-
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-
-            <div class="collapse navbar-collapse" id="collapsibleNav">
-
-                <div class="navbar-nav">
-
-                <a class="nav-item nav-link active" href="index.html">Home <span class="sr-only">(current)</span></a>
-
-                <!--a class="nav-item nav-link" href="#">Browse Recipes</a-->
-
-                <a class="nav-item nav-link" href="about.html">About</a>
-
-                </div>
-
-            </div>
-
-            </span>
-
-        </nav>
-
-        <!--Main page content, within section-->
-
-        <section ng-app="recipeSearch" ng-controller="recipeSearchCtrl" class="container bodyContent">
-
-        <!--Ingredient list builder-->
-
-            <div class="row justify-content-between">
-
-                <div class="card col-12 col-md-6">
-
-                    <div class="card-header">
-
-                        <h5 class="card-title">Recipe Search</h4>
-
-                        <h6 class="card-subtitle mb-2">Add your list of ingredients below.</h5>
-
-                    </div>
-
-                    <div class="card-body">
-
-                        <ul class="list-group list-group-flush">
-
-                            <li ng-repeat="x in ingredients" class="list-group-item d-flex justify-content-between align-items-center">{{x}}<span ng-click="removeIngredient($index)" class="removeX">x</span></li>
-
-                        </ul>
-
-                    </div>
-
-                    <div class="card-footer">
-
-                        <div class="input-group">
-
-                            <input ng-model="addIn">
-
-                            <div class="input-group-append">
-
-                                <button ng-click="addIngredient()" class="btn inListBtn">Add</button>
-
-                            </div>
-
-                        </div>
-
-                        <p class="errorMsgText">{{errorMsg}}</p>
-
-                    </div>
-
-                </div>
-
-                <!--Additional search filters here, and SEARCH RECIPES BUTTON here-->
-
-                <div class="col-4">
-
-                    <div class="recipeFilterInput">
-
-                        <form>
-
-                            <!--No functionality on this calories input yet; example of types of filters that could be used-->
-
-                            <div class="row">
-
-                                <div class="col">
-
-                                    <h6>Calories:</h6>
-
-                                </div>
-
-                                <div class="col">
-
-                                    <input type="text" class="form-control" placeholder="min">
-
-                                </div>
-
-                                <div class="col">
-
-                                    <input type="text" class="form-control" placeholder="max">
-
-                                </div>
-
-                            </div>
-
-                            <!--START SEARCH ON CLICK-->
-
-                            <div class="row align-items-end">
-
-                                <div class="col">
-
-                                    <button ng-click="recipeSearch()" class="btn btn-lg recipeSearchBtn">Search Recipes</button>
-
-                                </div>
-
-                            </div>
-
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!--Recipes Display, will expand with more data displayed -> allow on click: open new recipe page-->
-
-            <div class="row justify-content-between recipeTable">
-
-                <!--
-
-                <p>{{message}}</p>
-
-                -->
-                <div ng-show="showLoader" class="loader"></div>
-                <table ng-show="showRecipeTable" class="table is-bordered is-striped">
-
-                    <tr>
-
-                        <th ng-click="selectedOrder('label')">Recipe</th>
-
-                        <th ng-click="selectedOrder('yield')">Servings</th>
-
-                        <th ng-click="selectedOrder('calories')">Calories</th>
-
-                    </tr>
-
-                    <tr ng-repeat="x in recipes | orderBy:sortOrder">
-
-                        <td>{{x.label}}</td>
-
-                        <td>{{x.yield}}</td>
-
-                        <td>{{x.calories | number : 0}}</td> <!-- truncates the number to be integer-valued-->
-
-                    </tr>
-
-                </table>
-
-            </div>
-
-        </section>
-
-
+        <link rel="shortcut icon" type="image/png" href="images/favicon.png">
 
         <!--angular controller-->
 
         <script src="recipeSearchController.js"></script>
 
+    </head>
 
+    <body ng-controller="recipeSearchCtrl">
+
+            <!--Navbar-->
+        
+            <nav class="navbar navbar-expand-md navbar-dark">
+        
+                <span class="container">
+        
+                <a class="navbar-brand" id="navBrand" href="#">
+                    <img src="images/recipeking_logo.png" class="d-inline-block align-top">Recipe King</a>
+        
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNav">
+        
+                    <span class="navbar-toggler-icon"></span>
+        
+                </button>
+        
+                <div class="collapse navbar-collapse" id="collapsibleNav">
+        
+                    <div class="navbar-nav">
+        
+                    <a class="nav-item nav-link active" href="#/!">Home</a>
+        
+                    <a class="nav-item nav-link" href="#!about">About</a>
+        
+                    </div>
+        
+                </div>
+        
+                </span>
+        
+            </nav>
+            <section class="container bodyContent">
+        
+
+            <div ng-view></div>
+            </section>
 
     </body>
 
