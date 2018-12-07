@@ -127,7 +127,6 @@ span.psw {
 <body>
 
 <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
-<button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Sign Up</button>
 
 <div id="id01" class="modal">
   
@@ -147,37 +146,14 @@ span.psw {
   </form>
 </div>
 
-<div id="id02" class="modal">
-  
-  <form class="modal-content animate" action="../signup.php" method="post">
-    <div class="container">
-      <label for="username"><b>Username</b></label>
-      <input type="text" id="username" placeholder="Enter Username" name="username" required>
-
-      <label for="psw"><b>Password</b></label>
-      <input type="password" id="password" placeholder="Enter Password" name="password" required>
-        
-      <button type="submit">Sign up</button>
-      
-    
-
-    </div>
-  </form>
-</div>
-
 <script>
 // Get the modal
 var modal = document.getElementById('id01');
-
-var modal2 = document.getElementById('id02');
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
-    if (event.target == modal2) {
-        modal2.style.display = "none";
-    }
     }
 }
 </script>

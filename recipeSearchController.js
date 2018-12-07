@@ -11,7 +11,7 @@ app.config(function($routeProvider) {
         templateUrl : "views/about.html",
     })
     .when("/recipe", {
-        templateUrl : "views/recipe.html",
+        templateUrl : "views/recipe.php",
         controller  : "recipePageController"
     });
 });
